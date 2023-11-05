@@ -1,10 +1,9 @@
-import 'google-apps-script'
 import { isStakeholderApproved } from './helper'
 import { HEADQUARTER_COLUMN_NUMBER, LOCATIONS_SERVED_COLUMN_NUMBER, LIST_DELIMETER, HEADQUARTER_COORDINATES_COLUMN_NUMBER, LOCATIONS_SERVED_COORDINATES_COLUMN_NUMBER } from './constants'
 
 // Upon approval,
 // Geocodes the headquarters cell and list of communities served cell to coordinates
-function onStakeholderApprovalGeocode(e: GoogleAppsScript.Events.SheetsOnEdit) {
+export function onStakeholderApprovalGeocode(e: GoogleAppsScript.Events.SheetsOnEdit) {
   if (!isStakeholderApproved(e))
     return
 

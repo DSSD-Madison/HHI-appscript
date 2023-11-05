@@ -1,10 +1,9 @@
-import 'google-apps-script'
 import { isStakeholderApproved, isStakeholderRejected, isStakeholderStatusUpdate } from './helper'
 import { EMAIL_COLUMN_NUMBER, REASON_COLUMN_NUMBER, APPROVED_MESSAGE, REJECTED_MESSAGE, REJECTED_REASON_MESSAGE, EMAIL_SUBJECT } from './constants'
 
 // Upon approval or rejection,
 // Sends an email to the stakeholder informing them, providing a reason if it is a rejection
-function onStakeholderUpdateEmail(e) {
+export function onStakeholderUpdateEmail(e: GoogleAppsScript.Events.SheetsOnEdit) {
   if (!isStakeholderStatusUpdate(e))
     return
 

@@ -1,5 +1,19 @@
 {
-  "dependencies": {
-    "@types/google-apps-script": "^1.0.76"
+  "main": "index.js",
+  "scripts": {
+    "build": "rollup --config",
+    "deploy": "clasp push"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.23.2",
+    "@babel/plugin-transform-runtime": "^7.23.2",
+    "@babel/preset-env": "^7.23.2",
+    "@babel/preset-typescript": "^7.23.2",
+    "@rollup/plugin-babel": "^6.0.4",
+    "@rollup/plugin-node-resolve": "^15.2.3",
+    "@types/google-apps-script": "^1.0.76",
+    "@types/node": "^20.8.10",
+    "rollup": "^2.79.1",
+    "typescript": "^5.2.2"
   }
 }

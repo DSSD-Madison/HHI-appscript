@@ -13,7 +13,9 @@ Submission Form: https://docs.google.com/forms/u/3/d/e/1FAIpQLSedeAfs9-vNfGNfuyF
 
 
 ### Local Development
-This project follows [this guide on AppScript](https://developers.google.com/apps-script/guides/typescript) to enable TypeScript development on AppScript
+This project follows [this guide on AppScript](https://developers.google.com/apps-script/guides/typescript) to enable TypeScript development on AppScript.
+
+It also follows [the instructions from the Github](https://github.com/google/clasp/blob/master/docs/typescript.md), which leads to [this page](https://github.com/google/clasp/blob/master/docs/esmodules.md) and [this repo](https://github.com/atti187/esmodules/blob/main/babel.config.js), in order to support ES modules syntax (import/export)
 
 This project requires node, npm, and clasp.
 
@@ -25,6 +27,7 @@ npm install -g @google/clasp
 To set up the project to sync, run the following at the root of this project:
 ```
 npm i
+npm run build
 clasp login
 clasp pull
 clasp push --watch

@@ -1,4 +1,3 @@
-import 'google-apps-script'
 import { APPROVED, REJECTED, FORM_SHEET_ID, APPROVAL_COLUMN_NUMBER } from "./constants"
 
 const DEBUG = false
@@ -48,9 +47,4 @@ export function isStakeholderStatusUpdate(e: GoogleAppsScript.Events.SheetsOnEdi
   }
 
   return true
-}
-
-// Converts column string (A, B, C, ...) to column number (1, 2, 3, ...)
-export function columnToNumber(column: string) {
-  return column.toLowerCase().charCodeAt(0) - 97 + 1
 }
