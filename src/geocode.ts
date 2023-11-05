@@ -20,7 +20,7 @@ export function onStakeholderApprovalGeocode(e: GoogleAppsScript.Events.SheetsOn
 
   // Put them into coordinate cells in the format 'lat, long' and 'lat1, long1;lat2, long2'
   sheet.getRange(row, HEADQUARTER_COORDINATES_COLUMN_NUMBER).setValue(`${headquarterCoordinates[0]}, ${headquarterCoordinates[1]}`)
-  sheet.getRange(row, LOCATIONS_SERVED_COORDINATES_COLUMN_NUMBER).setValue(locationsServedCoordinates.map((lat, long) => `${lat}, ${long}`).join(LIST_DELIMETER))
+  sheet.getRange(row, LOCATIONS_SERVED_COORDINATES_COLUMN_NUMBER).setValue(locationsServedCoordinates.map(coordinates => `${coordinates[0]}, ${coordinates[1]}`).join(LIST_DELIMETER))
 }
 
 // Converts an address list to a list of coodinates
