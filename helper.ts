@@ -1,3 +1,4 @@
+import 'google-apps-script'
 import { APPROVED, REJECTED, FORM_SHEET_ID, APPROVAL_COLUMN_NUMBER } from "./constants"
 
 const DEBUG = false
