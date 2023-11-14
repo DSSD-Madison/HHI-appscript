@@ -16,18 +16,22 @@ export function importSheet(e: GoogleAppsScript.Events.SheetsOnChange) {
 
   const dataToImport = {};
 
-  for (var i = 1; i < data.length; i++) {
+  for (let i = 1; i < data.length; i++) {
     dataToImport[data[i][0]] = {};
-    for (var j = 0; j < data[0].length; j++) {
+    for (let j = 0; j < data[0].length; j++) {
       assign(dataToImport[data[i][0]], data[0][j].split("__"), data[i][j]);
     }
   }
 
-  var token = ScriptApp.getOAuthToken();
+  const firebaseUrl = REALTIME_DATABASE_URL + sheet.getParent().getId(); // + "/" + name;
 
-  var firebaseUrl =
-    REALTIME_DATABASE_URL + sheet.getParent().getId(); // + "/" + name;
-  var base = FirebaseApp.getDatabaseByUrl(firebaseUrl, token);
+  const token = ScriptApp.getOAuthToken();
+
+  importData(dataToImport, firebaseUrl, token);
+}
+
+function importData(dataToImport, firebaseUrl: string, token: string) {
+  const base = FirebaseApp.getDatabaseByUrl(firebaseUrl, token);
   base.setData("", dataToImport);
 }
 
