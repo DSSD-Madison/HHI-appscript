@@ -1,4 +1,4 @@
-import { APPROVED_SHEET_ID, FORM_SHEET_ID } from "./constants";
+import { SPREADSHEET_ID } from "./constants";
 import { onStakeholderUpdateEmail } from "./email";
 import { onStakeholderApprovalGeocode } from "./geocode";
 import { importSheet } from "./rtdb";
@@ -8,26 +8,25 @@ import { deleteTriggers } from "./helper";
 function placeholderFunction() {
   onStakeholderApprovalGeocode(null);
   onStakeholderUpdateEmail(null);
-  importSheet();
+  importSheet(null);
 }
 
 function createTriggers() {
   deleteTriggers()
  
-  const formSpreadsheet = SpreadsheetApp.openById(FORM_SHEET_ID.toString())
+  const spreadsheet = SpreadsheetApp.openById(SPREADSHEET_ID)
   ScriptApp.newTrigger("onStakeholderUpdateEmail")
-    .forSpreadsheet(formSpreadsheet)
+    .forSpreadsheet(spreadsheet)
     .onEdit()
     .create()
   
   ScriptApp.newTrigger("onStakeholderApprovalGeocode")
-    .forSpreadsheet(formSpreadsheet)
+    .forSpreadsheet(spreadsheet)
     .onEdit()
     .create()
 
-  const approvedSpreadsheet = SpreadsheetApp.openById(APPROVED_SHEET_ID.toString());
   ScriptApp.newTrigger("importSheet")
-    .forSpreadsheet(approvedSpreadsheet)
+    .forSpreadsheet(spreadsheet)
     .onChange()
     .create();
 }
