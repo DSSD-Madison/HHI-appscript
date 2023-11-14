@@ -3,7 +3,10 @@
 
 AppScript code for the HHI Map's Stakeholder Submission Form.
 
-Includes a geocoder for addresses on approval, and an mailer for application status on update.
+Includes three triggers:
+- On stakeholder update, sends the stakeholder mail indicating the status (accept/reject)
+- On stakeholder accept, geocodes the locations to coordinates, and syncs the approved sheet with the realtime database
+- On stakeholder rejection, re-syncs the approved sheet with the realtime database
 
 Parent project: https://github.com/DSSD-Madison/HHI
 
@@ -32,3 +35,7 @@ clasp login
 clasp pull
 clasp push --watch
 ```
+
+Afterwards, go to Google App Script. Run the `createTriggers` function in the code to create all necessary triggers for the project.
+
+If new permissions were added as part of OAuth, run the "sendEmail" function in any mode. A window should pop up asking for the permissions. (The function should fail, as undefined inputs as provided. This is just a workaround to make the app ask for permissions)

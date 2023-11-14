@@ -1,5 +1,11 @@
-// The HHI Stakeholder submission form sheet
+export const SPREADSHEET_ID = "1TI0WNrGsTKC_lZPXhcwxK4fHsc2-A88GysVtidI75z0"
+
+// The HHI Stakeholder submission form sheet and approved stakeholders sheet
 export const FORM_SHEET_ID = 664466786
+export const APPROVED_SHEET_ID = 1940570428
+
+// RTDB Firebase
+export const REALTIME_DATABASE_URL = "https://hhimap-default-rtdb.firebaseio.com/"
 
 export const EMAIL_COLUMN_NUMBER = columnToNumber('B')
 export const HEADQUARTER_COLUMN_NUMBER = columnToNumber('F')

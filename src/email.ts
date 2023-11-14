@@ -30,5 +30,9 @@ export function onStakeholderUpdateEmail(e: GoogleAppsScript.Events.SheetsOnEdit
     return
   }
 
-  MailApp.sendEmail(email, EMAIL_SUBJECT, message);
+  sendEmail(EMAIL_SUBJECT, message, email);
+}
+
+function sendEmail(subject: string, message: string, email: string) {
+  MailApp.sendEmail(email, subject, message);
 }
