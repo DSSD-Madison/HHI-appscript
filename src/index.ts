@@ -1,32 +1,25 @@
 import { SPREADSHEET_ID } from "./constants";
 import { onStakeholderUpdateEmail } from "./email";
-import { onStakeholderApprovalGeocode } from "./geocode";
-import { importSheet } from "./rtdb";
+import { onStakeholderApprovalGeocodeAndSync } from "./geocodeAndSync";
 import { deleteTriggers } from "./helper";
 
 // A placeholder function to ensure that triggers are included
 function placeholderFunction() {
-  onStakeholderApprovalGeocode(null);
+  onStakeholderApprovalGeocodeAndSync(null);
   onStakeholderUpdateEmail(null);
-  importSheet(null);
 }
 
 function createTriggers() {
   deleteTriggers()
  
-  const spreadsheet = SpreadsheetApp.openById(SPREADSHEET_ID)
-  ScriptApp.newTrigger("onStakeholderUpdateEmail")
-    .forSpreadsheet(spreadsheet)
-    .onEdit()
-    .create()
+  // const spreadsheet = SpreadsheetApp.openById(SPREADSHEET_ID)
+  // ScriptApp.newTrigger("onStakeholderUpdateEmail")
+  //   .forSpreadsheet(spreadsheet)
+  //   .onEdit()
+  //   .create()
   
-  ScriptApp.newTrigger("onStakeholderApprovalGeocode")
+  ScriptApp.newTrigger("onStakeholderApprovalGeocodeAndSync")
     .forSpreadsheet(spreadsheet)
     .onEdit()
     .create()
-
-  ScriptApp.newTrigger("importSheet")
-    .forSpreadsheet(spreadsheet)
-    .onChange()
-    .create();
 }
