@@ -63,8 +63,8 @@ export function isStakeholderStatusUpdate(
 
 // Delete all the existing triggers for the project
 export function deleteTriggers() {
-  var triggers = ScriptApp.getProjectTriggers();
+  var triggers = ScriptApp.getProjectTriggers()
   for (var i = 0; i < triggers.length; i++) {
-    ScriptApp.deleteTrigger(triggers[i]);
+    ScriptApp.deleteTrigger(triggers[i])
   }
 }

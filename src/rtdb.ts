@@ -1,5 +1,6 @@
-import { REALTIME_DATABASE_URL } from "./constants";
+// Code taken from https://medium.com/firebase-developers/sheets-to-firebase-33132e31935b
 
+import { REALTIME_DATABASE_URL } from "./constants";
 
 // Import each sheet when there is a change
 export function importSheet() {

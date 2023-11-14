@@ -12,18 +12,18 @@ function placeholderFunction() {
 }
 
 function createTriggers() {
-  deleteTriggers();
+  deleteTriggers()
  
-  const formSpreadsheet = SpreadsheetApp.openById(FORM_SHEET_ID.toString());
+  const formSpreadsheet = SpreadsheetApp.openById(FORM_SHEET_ID.toString())
   ScriptApp.newTrigger("onStakeholderUpdateEmail")
     .forSpreadsheet(formSpreadsheet)
     .onEdit()
-    .create();
+    .create()
   
   ScriptApp.newTrigger("onStakeholderApprovalGeocode")
     .forSpreadsheet(formSpreadsheet)
     .onEdit()
-    .create();
+    .create()
 
   const approvedSpreadsheet = SpreadsheetApp.openById(APPROVED_SHEET_ID.toString());
   ScriptApp.newTrigger("importSheet")
