@@ -32,3 +32,5 @@ clasp login
 clasp pull
 clasp push --watch
 ```
+
+Afterwards, go to Google App Script. Run the `createTriggers` function in the code to create all necessary triggers for the project.

@@ -30,5 +30,3 @@ function createTriggers() {
     .onChange()
     .create();
 }
-
-createTriggers();
