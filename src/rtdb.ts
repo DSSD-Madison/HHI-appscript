@@ -1,7 +1,18 @@
 import { APPROVED_SHEET_ID, REALTIME_DATABASE_URL, SPREADSHEET_ID } from "./constants";
+import { isStakeholderRejected, isStakeholderStatusUpdate } from "./helper";
+
+
+// Upon rejection,
+// Updates the RTDB to remove the column in the approved sheet
+export function onStakeholderRejectionSync(e: GoogleAppsScript.Events.SheetsOnEdit) {
+  if (!isStakeholderRejected(e))
+    return
+
+  syncApprovedSheet()
+}
 
 // Import approved sheet to RTDB
-export function importSheet() {
+export function syncApprovedSheet() {
   // Get appoved sheet
   const sheet = SpreadsheetApp.openById(SPREADSHEET_ID)
     .getSheets()

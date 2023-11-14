@@ -1,6 +1,6 @@
 import { isStakeholderApproved } from './helper'
 import { HEADQUARTER_COLUMN_NUMBER, LOCATIONS_SERVED_COLUMN_NUMBER, LIST_DELIMETER, HEADQUARTER_COORDINATES_COLUMN_NUMBER, LOCATIONS_SERVED_COORDINATES_COLUMN_NUMBER } from './constants'
-import { importSheet } from './rtdb'
+import { syncApprovedSheet } from './rtdb'
 
 // Upon approval,
 // Geocodes the headquarters cell and list of communities served cell to coordinates
@@ -24,7 +24,7 @@ export function onStakeholderApprovalGeocodeAndSync(e: GoogleAppsScript.Events.S
   sheet.getRange(row, HEADQUARTER_COORDINATES_COLUMN_NUMBER).setValue(`${headquarterCoordinates[0]}, ${headquarterCoordinates[1]}`)
   sheet.getRange(row, LOCATIONS_SERVED_COORDINATES_COLUMN_NUMBER).setValue(locationsServedCoordinates.map(coordinates => `${coordinates[0]}, ${coordinates[1]}`).join(LIST_DELIMETER))
 
-  importSheet()
+  syncApprovedSheet()
 }
 
 // Converts an address list to a list of coodinates
