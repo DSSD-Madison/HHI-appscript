@@ -8,20 +8,19 @@ function createTriggers() {
   deleteTriggers()
  
   const spreadsheet = SpreadsheetApp.openById(SPREADSHEET_ID)
-  ScriptApp.newTrigger("onStakeholderUpdateEmail")
-    .forSpreadsheet(spreadsheet)
-    .onEdit()
-    .create()
-  
-  ScriptApp.newTrigger("onStakeholderApprovalGeocodeAndSync")
-    .forSpreadsheet(spreadsheet)
-    .onEdit()
-    .create()
 
-  ScriptApp.newTrigger("onStakeholderRejectionSync")
-    .forSpreadsheet(spreadsheet)
-    .onEdit()
-    .create()
+  const editTriggers = [
+    onStakeholderUpdateEmail.name,
+    onStakeholderApprovalGeocodeAndSync.name,
+    onStakeholderRejectionSync.name
+  ]
+
+  editTriggers.forEach(trigger => {
+    ScriptApp.newTrigger(trigger)
+      .forSpreadsheet(spreadsheet)
+      .onEdit()
+      .create()
+  })
 }
 
 // A wrapper for triggers to catch errors, log them, and notify an administrative email about issues
