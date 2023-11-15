@@ -7,6 +7,8 @@ export const APPROVED_SHEET_ID = 1940570428
 // RTDB Firebase
 export const REALTIME_DATABASE_URL = "https://hhimap-default-rtdb.firebaseio.com/"
 
+export const ADMIN_EMAIL = "gxue5@wisc.edu"
+
 export const EMAIL_COLUMN_NUMBER = columnToNumber('B')
 export const HEADQUARTER_COLUMN_NUMBER = columnToNumber('F')
 export const LOCATIONS_SERVED_COLUMN_NUMBER = columnToNumber('G')
