@@ -5,6 +5,7 @@ import {
   HEADQUARTER_COORDINATES_COLUMN_NUMBER,
   LOCATIONS_SERVED_COORDINATES_COLUMN_NUMBER,
 } from "../constants";
+import { highlightErrorCell } from "./highlight";
 
 // Upon approval,
 // Geocodes the headquarters cell and list of communities served cell to coordinates
@@ -23,10 +24,25 @@ export function geocodeRow(
     .split(LIST_DELIMETER);
 
   // Convert the addresses
-  const headquarterCoordinates = toCoordinates(headquarterAddress);
-  const locationsServedCoordinates = toCoordinatesList(
-    locationsServedAddresses
-  );
+  let headquarterCoordinates: [lat: number, long: number]
+  let locationsServedCoordinates: [lat: number, long: number][]
+  try {
+    headquarterCoordinates = toCoordinates(headquarterAddress);
+  }
+  catch (e) {
+    const message = `Failed to geocode headquarters: ${e.message}`
+    Logger.log(message)
+    highlightErrorCell(sheet, row, HEADQUARTER_COLUMN_NUMBER, message)
+  }
+
+  try {
+    locationsServedCoordinates = toCoordinatesList(locationsServedAddresses);
+  }
+  catch (e) {
+    const message = `Failed to geocode locations: ${e.message}`
+    Logger.log(message)
+    highlightErrorCell(sheet, row, LOCATIONS_SERVED_COLUMN_NUMBER, message)
+  }
 
   // Put them into coordinate cells in the format 'lat, long' and 'lat1, long1;lat2, long2'
   sheet
