@@ -1,13 +1,17 @@
-import { APPROVED_SHEET_ID, REALTIME_DATABASE_URL, SPREADSHEET_ID } from "./constants";
+import {
+  APPROVED_SHEET_ID,
+  REALTIME_DATABASE_URL,
+  SPREADSHEET_ID,
+} from "../constants";
 
 // Import approved sheet to RTDB
 export function syncApprovedSheet() {
   // Get appoved sheet
   const sheet = SpreadsheetApp.openById(SPREADSHEET_ID)
     .getSheets()
-    .filter(s => s.getSheetId() === APPROVED_SHEET_ID)[0]
+    .filter((s) => s.getSheetId() === APPROVED_SHEET_ID)[0];
 
-  const data = sheet.getDataRange().getValues()
+  const data = sheet.getDataRange().getValues();
 
   // First row contains headers
   var headers = data[0];
@@ -25,10 +29,13 @@ export function syncApprovedSheet() {
     dataToSync.push(rowObject);
   }
 
-  importData(dataToSync)
+  importData(dataToSync);
 }
 
 function importData(dataToImport) {
-  const base = FirebaseApp.getDatabaseByUrl(REALTIME_DATABASE_URL, ScriptApp.getOAuthToken());
+  const base = FirebaseApp.getDatabaseByUrl(
+    REALTIME_DATABASE_URL,
+    ScriptApp.getOAuthToken()
+  );
   base.setData("", dataToImport);
 }

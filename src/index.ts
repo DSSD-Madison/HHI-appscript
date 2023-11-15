@@ -1,8 +1,8 @@
 import { ADMIN_EMAIL, SPREADSHEET_ID } from "./constants";
-import { mailToRow, sendEmail } from "./email";
-import { geocodeRow } from "./geocode";
+import { mailToRow, sendEmail } from "./services/email";
+import { geocodeRow } from "./services/geocode";
 import { deleteTriggers, isStakeholderApproved, isStakeholderRejected, isStakeholderStatusUpdate } from "./helper";
-import { syncApprovedSheet } from "./rtdb";
+import { syncApprovedSheet } from "./services/rtdb";
 
 function createTriggers() {
   deleteTriggers()
