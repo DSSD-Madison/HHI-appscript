@@ -43,7 +43,7 @@ export function geocodeRow(
     const message = `Failed to geocode locations: ${e.message}`
     Logger.log(message)
     highlightErrorCell(sheet, row, LOCATIONS_SERVED_COLUMN_NUMBER, message)
-    throw new Error("Geocoding failed");
+    throw new Error(`Geocoding failed. ${message}`);
   }
 
   // Put them into coordinate cells in the format 'lat, long' and 'lat1, long1;lat2, long2'
