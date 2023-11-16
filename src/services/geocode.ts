@@ -1,9 +1,10 @@
 import {
   HEADQUARTER_COLUMN_NUMBER,
   LOCATIONS_SERVED_COLUMN_NUMBER,
-  LIST_DELIMETER,
+  LOCATIONS_SERVED_LIST_DELIMETER,
   HEADQUARTER_COORDINATES_COLUMN_NUMBER,
   LOCATIONS_SERVED_COORDINATES_COLUMN_NUMBER,
+  COORDINATES_DELIMETER,
 } from "../constants";
 import { highlightErrorCell } from "./highlight";
 
@@ -21,7 +22,7 @@ export function geocodeRow(
   const locationsServedAddresses: string[] = sheet
     .getRange(row, LOCATIONS_SERVED_COLUMN_NUMBER)
     .getValue()
-    .split(LIST_DELIMETER);
+    .split(LOCATIONS_SERVED_LIST_DELIMETER);
 
   // Convert the addresses
   let headquarterCoordinates: [lat: number, long: number]
@@ -52,8 +53,8 @@ export function geocodeRow(
     .getRange(row, LOCATIONS_SERVED_COORDINATES_COLUMN_NUMBER)
     .setValue(
       locationsServedCoordinates
-        .map((coordinates) => `${coordinates[0]}, ${coordinates[1]}`)
-        .join(LIST_DELIMETER)
+        .map((coordinates) => coordinates[0] + COORDINATES_DELIMETER + coordinates[1])
+        .join(LOCATIONS_SERVED_LIST_DELIMETER)
     );
 }
 

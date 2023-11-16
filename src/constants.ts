@@ -13,7 +13,14 @@ export const LOCATIONS_SERVED_COORDINATES_COLUMN_NUMBER = columnToNumber('J')
 export const APPROVAL_COLUMN_NUMBER = columnToNumber('K')
 export const REASON_COLUMN_NUMBER = columnToNumber('L')
 
-export const LIST_DELIMETER = ';'
+export const TAGS_FIELD_NAME = "tags"
+export const HEADQUARTER_COORDINATES_FIELD_NAME = "headquarterCoordinates"
+export const LOCATIONS_SERVED_FIELD_NAME = "locationServed"
+export const LOCATIONS_SERVED_COORDINATES_FIELD_NAME = "locationServedCoordinates"
+
+export const COORDINATES_DELIMETER = ','
+export const TAGS_LIST_DELIMETER = ','
+export const LOCATIONS_SERVED_LIST_DELIMETER = ';'
 
 export const APPROVED = 'Approved'
 export const REJECTED = 'Rejected'
