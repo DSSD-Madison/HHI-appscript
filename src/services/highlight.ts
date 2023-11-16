@@ -9,8 +9,5 @@ export function highlightErrorCell(
 ) {
   sheet.getRange(row, column)
     .setBackground(CELL_ERROR_HIGHLIGHT_COLOR.toString())
-  
-  sheet.getRange(row, column)
-    .getCell(row, column)
     .setNote(message)
 }
