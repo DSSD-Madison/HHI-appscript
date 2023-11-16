@@ -28,8 +28,8 @@ export function geocodeRow(
     .split(LOCATIONS_SERVED_LIST_DELIMETER);
 
   // Convert the addresses
-  let headquarterCoordinates: [lat: number, long: number]
-  let locationsServedCoordinates: [lat: number, long: number][]
+  let headquarterCoordinates: [lat: number, lng: number]
+  let locationsServedCoordinates: [lat: number, lng: number][]
   try {
     headquarterCoordinates = toCoordinates(headquarterAddress);
   }
@@ -52,7 +52,7 @@ export function geocodeRow(
     throw new Error(`Geocoding failed. ${message}`)
   }
 
-  // Put them into coordinate cells in the format 'lat, long' and 'lat1, long1;lat2, long2'
+  // Put them into coordinate cells in the format 'lat, lng' and 'lat1, lng1;lat2, lng2'
   sheet
     .getRange(row, HEADQUARTER_COORDINATES_COLUMN_NUMBER)
     .setValue(`${headquarterCoordinates[0]}, ${headquarterCoordinates[1]}`)
@@ -68,12 +68,12 @@ export function geocodeRow(
 }
 
 // Converts an address list to a list of coodinates
-function toCoordinatesList(addresses: string[]): [lat: number, long: number][] {
+function toCoordinatesList(addresses: string[]): [lat: number, lng: number][] {
   return addresses.map(toCoordinates)
 }
 
-// Converts an address to coordinates lat, long
-function toCoordinates(address: string): [lat: number, long: number] {
+// Converts an address to coordinates lat, lng
+function toCoordinates(address: string): [lat: number, lng: number] {
   const geocoder = Maps.newGeocoder().geocode(address)
 
   // Fetch the first result from the geocoder
