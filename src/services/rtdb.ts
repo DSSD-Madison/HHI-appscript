@@ -35,15 +35,18 @@ export function syncApprovedSheet() {
       switch(headers[j]) {
         case TAGS_FIELD_NAME:
           rowObject[headers[j]] = rowData[j].split(TAGS_LIST_DELIMETER)
+                                            .map(tag => tag.trim())
           break;
         case HEADQUARTER_COORDINATES_FIELD_NAME:
             rowObject[headers[j]] = coordinateStringToJSON(rowData[j]);
             break;
         case LOCATIONS_SERVED_FIELD_NAME:
           rowObject[headers[j]] = rowData[j].split(LOCATIONS_SERVED_LIST_DELIMETER)
+                                            .map(location => location.trim())
           break;
         case LOCATIONS_SERVED_COORDINATES_FIELD_NAME:
           rowObject[headers[j]] = rowData[j].split(LOCATIONS_SERVED_LIST_DELIMETER)
+                                            .map(coordinate => coordinate.trim())
                                             .map(coordinateStringToJSON)
           break;
         default:
