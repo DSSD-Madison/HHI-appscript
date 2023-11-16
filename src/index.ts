@@ -12,7 +12,7 @@ function createTriggers() {
   const editTriggers = [
     onStakeholderUpdateEmail.name,
     onStakeholderApprovalGeocodeAndSync.name,
-    onStakeholderRejectionSync.name
+    onStakeholderNonApprovalSync.name
   ]
 
   editTriggers.forEach(trigger => {
@@ -73,11 +73,11 @@ function onStakeholderApprovalGeocodeAndSync(e: GoogleAppsScript.Events.SheetsOn
   })
 }
 
-// Upon rejection,
+// Upon nonapproval,
 // Updates the RTDB to remove the column in the approved sheet
-function onStakeholderRejectionSync(e: GoogleAppsScript.Events.SheetsOnEdit) {
+function onStakeholderNonApprovalSync(e: GoogleAppsScript.Events.SheetsOnEdit) {
   triggerWrapper(() => {
-    if (!isStakeholderRejected(e))
+    if (!isStakeholderStatusUpdate(e) || isStakeholderApproved(e))
       return
 
     syncApprovedSheet()
