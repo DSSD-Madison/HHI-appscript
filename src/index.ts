@@ -66,6 +66,9 @@ function onStakeholderApprovalGeocodeAndSync(e: GoogleAppsScript.Events.SheetsOn
     
     geocodeRow(sheet, row)
 
+    // persist changes
+    SpreadsheetApp.flush()
+
     syncApprovedSheet()
   })
 }
