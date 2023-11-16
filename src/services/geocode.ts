@@ -34,6 +34,8 @@ export function geocodeRow(
     const message = `Failed to geocode headquarters: ${e.message}`
     Logger.log(message)
     highlightProcessingError(sheet, row, HEADQUARTER_COLUMN_NUMBER, message)
+    resetStakeholderStatus(row)
+    throw new Error(`Geocoding failed. ${message}`)
   }
 
   try {
@@ -43,7 +45,7 @@ export function geocodeRow(
     const message = `Failed to geocode locations: ${e.message}`
     Logger.log(message)
     highlightProcessingError(sheet, row, LOCATIONS_SERVED_COLUMN_NUMBER, message)
-    resetStakeholderStatus(sheet, row)
+    resetStakeholderStatus(row)
     throw new Error(`Geocoding failed. ${message}`)
   }
 
