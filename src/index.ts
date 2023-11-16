@@ -35,7 +35,7 @@ function triggerWrapper(triggerCallback: () => void) {
 
 // Upon approval or rejection,
 // Sends an email to the stakeholder informing them, providing a reason if it is a rejection
-export function onStakeholderUpdateEmail(e: GoogleAppsScript.Events.SheetsOnEdit) {
+function onStakeholderUpdateEmail(e: GoogleAppsScript.Events.SheetsOnEdit) {
   triggerWrapper(() => {
     if (!isStakeholderStatusUpdate(e))
       return
@@ -72,7 +72,7 @@ function onStakeholderApprovalGeocodeAndSync(e: GoogleAppsScript.Events.SheetsOn
 
 // Upon rejection,
 // Updates the RTDB to remove the column in the approved sheet
-export function onStakeholderRejectionSync(e: GoogleAppsScript.Events.SheetsOnEdit) {
+function onStakeholderRejectionSync(e: GoogleAppsScript.Events.SheetsOnEdit) {
   triggerWrapper(() => {
     if (!isStakeholderRejected(e))
       return
