@@ -43,6 +43,8 @@ export const REJECTED_MESSAGE = 'Your submission has unforunately been rejected.
 export const REJECTED_REASON_MESSAGE = 'Rejection reason:'
 
 
+export const DEBUG = true
+
 // Converts column string (A, B, C, ...) to column number (1, 2, 3, ...)
 function columnToNumber(column: string) {
   return column.toLowerCase().charCodeAt(0) - 97 + 1

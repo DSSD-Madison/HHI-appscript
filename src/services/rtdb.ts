@@ -1,6 +1,7 @@
 import {
   APPROVED_SHEET_ID,
   COORDINATES_DELIMETER,
+  DEBUG,
   HEADQUARTER_COORDINATES_FIELD_NAME,
   LOCATIONS_SERVED_COORDINATES_FIELD_NAME,
   LOCATIONS_SERVED_FIELD_NAME,
@@ -13,6 +14,8 @@ import {
 
 // Import approved sheet to RTDB
 export function syncApprovedSheet() {
+  if (DEBUG) Logger.log("Syncing sheet...")
+
   // Get appoved sheet
   const sheet = SpreadsheetApp.openById(SPREADSHEET_ID)
     .getSheets()
@@ -58,6 +61,8 @@ export function syncApprovedSheet() {
   }
 
   importData(dataToSync);
+
+  if (DEBUG) Logger.log("Finished syncing sheet.")
 }
 
 function coordinateStringToJSON(coordinate: String) {

@@ -1,4 +1,4 @@
-import { APPROVAL_COLUMN_NUMBER, CELL_ERROR_HIGHLIGHT_COLOR, FORM_SHEET_ID, SPREADSHEET_ID } from "../constants";
+import { APPROVAL_COLUMN_NUMBER, CELL_ERROR_HIGHLIGHT_COLOR, DEBUG, FORM_SHEET_ID, SPREADSHEET_ID } from "../constants";
 
 // Highlights a cell and adds a note to it to notify of an error
 export function highlightProcessingError(
@@ -7,6 +7,8 @@ export function highlightProcessingError(
   column: number,
   message: string
 ) {
+  if (DEBUG) Logger.log("Highlighting processing error.")
+  
   sheet.getRange(row, column)
     .setBackground(CELL_ERROR_HIGHLIGHT_COLOR.toString())
     .setNote(message)
@@ -14,6 +16,8 @@ export function highlightProcessingError(
 
 // Reset the status of a stakeholder to a default empty state on error
 export function resetStakeholderStatus(row: number) {
+  if (DEBUG) Logger.log("Resetting stakeholder status.")
+
   // Get form sheet
   const sheet = SpreadsheetApp.openById(SPREADSHEET_ID)
   .getSheets()

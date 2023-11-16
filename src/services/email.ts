@@ -6,6 +6,7 @@ import {
   REJECTED_REASON_MESSAGE,
   EMAIL_SUBJECT,
   APPROVAL_COLUMN_NUMBER,
+  DEBUG,
 } from "../constants";
 import { highlightProcessingError, resetStakeholderStatus } from "./error";
 
@@ -14,6 +15,8 @@ export function mailToRow(
   row: number,
   approved: boolean
 ) {
+  if (DEBUG) Logger.log("Mailing to stakeholder...")
+
   // Check if there is still capacity to send emails
   if (MailApp.getRemainingDailyQuota() == 0) {
     const message = "Daily email quota exceeded"
@@ -39,6 +42,8 @@ export function mailToRow(
   }
 
   sendEmail(EMAIL_SUBJECT, message, email)
+
+  if (DEBUG) Logger.log("Email sent.")
 }
 
 export function sendEmail(subject: string, message: string, email: string) {

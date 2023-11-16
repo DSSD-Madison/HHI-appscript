@@ -5,6 +5,7 @@ import {
   HEADQUARTER_COORDINATES_COLUMN_NUMBER,
   LOCATIONS_SERVED_COORDINATES_COLUMN_NUMBER,
   COORDINATES_DELIMETER,
+  DEBUG,
 } from "../constants";
 import { highlightProcessingError, resetStakeholderStatus } from "./error";
 
@@ -15,6 +16,8 @@ export function geocodeRow(
   sheet: GoogleAppsScript.Spreadsheet.Sheet,
   row: number
 ) {
+  if (DEBUG) Logger.log("Geocoding row...")
+
   // Grab addresses
   const headquarterAddress: string = sheet
     .getRange(row, HEADQUARTER_COLUMN_NUMBER)
@@ -60,6 +63,8 @@ export function geocodeRow(
         .map((coordinates) => coordinates[0] + COORDINATES_DELIMETER + coordinates[1])
         .join(LOCATIONS_SERVED_LIST_DELIMETER)
     );
+  
+  if (DEBUG) Logger.log("Finished geocoding row.")
 }
 
 // Converts an address list to a list of coodinates
