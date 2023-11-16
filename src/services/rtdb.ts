@@ -72,7 +72,7 @@ function coordinateStringToJSON(coordinate: String) {
 
   return {
     lat: coordinates[0],
-    long: coordinates[1]
+    lng: coordinates[1]
   }
 }
 
