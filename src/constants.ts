@@ -6,17 +6,17 @@ export const FORM_SHEET_ID = 664466786
 export const APPROVED_SHEET_ID = 1940570428
 
 export const EMAIL_COLUMN_NUMBER = columnToNumber('B')
-export const HEADQUARTER_COLUMN_NUMBER = columnToNumber('G')
-export const LOCATIONS_SERVED_COLUMN_NUMBER = columnToNumber('H')
-export const HEADQUARTER_COORDINATES_COLUMN_NUMBER = columnToNumber('J')
-export const LOCATIONS_SERVED_COORDINATES_COLUMN_NUMBER = columnToNumber('K')
-export const APPROVAL_COLUMN_NUMBER = columnToNumber('L')
-export const REASON_COLUMN_NUMBER = columnToNumber('M')
+export const HEADQUARTER_COLUMN_NUMBER = columnToNumber('H')
+export const LOCATIONS_SERVED_COLUMN_NUMBER = columnToNumber('I')
+export const HEADQUARTER_COORDINATES_COLUMN_NUMBER = columnToNumber('K')
+export const LOCATIONS_SERVED_COORDINATES_COLUMN_NUMBER = columnToNumber('L')
+export const APPROVAL_COLUMN_NUMBER = columnToNumber('M')
+export const REASON_COLUMN_NUMBER = columnToNumber('N')
 
 export const TAGS_FIELD_NAME = "tags"
 export const HEADQUARTER_COORDINATES_FIELD_NAME = "headquarterCoordinates"
 export const LOCATIONS_SERVED_FIELD_NAME = "locationsServed"
-export const LOCATIONS_SERVED_COORDINATES_FIELD_NAME = "locationServedCoordinates"
+export const LOCATIONS_SERVED_COORDINATES_FIELD_NAME = "locationsServedCoordinates"
 
 export const COORDINATES_DELIMETER = ','
 export const TAGS_LIST_DELIMETER = ','
