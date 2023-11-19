@@ -2,6 +2,7 @@ import {
   APPROVED_SHEET_ID,
   COORDINATES_DELIMETER,
   DEBUG,
+  GLOBAL_FIELD_NAME,
   HEADQUARTER_COORDINATES_FIELD_NAME,
   LOCATIONS_SERVED_COORDINATES_FIELD_NAME,
   LOCATIONS_SERVED_FIELD_NAME,
@@ -32,6 +33,10 @@ export function syncApprovedSheet() {
     const rowData: String[] = data[i];
     const rowObject = {};
 
+    // Whether or not the organization has a global presence.
+    // True only if locations served is blank
+    rowObject[GLOBAL_FIELD_NAME] = false
+
     for (var j = 0; j < headers.length; j++) {
       // Handle various types of properties specifically
       // Convert delimeted lists to actual lists
@@ -44,6 +49,9 @@ export function syncApprovedSheet() {
             rowObject[headers[j]] = coordinateStringToJSON(rowData[j]);
             break;
         case LOCATIONS_SERVED_FIELD_NAME:
+          if (rowData[j] === "")
+            rowObject[GLOBAL_FIELD_NAME] = true
+
           rowObject[headers[j]] = rowData[j].split(LOCATIONS_SERVED_LIST_DELIMETER)
                                             .map(location => location.trim())
           break;

@@ -17,6 +17,7 @@ export const TAGS_FIELD_NAME = "tags"
 export const HEADQUARTER_COORDINATES_FIELD_NAME = "headquarterCoordinates"
 export const LOCATIONS_SERVED_FIELD_NAME = "locationsServed"
 export const LOCATIONS_SERVED_COORDINATES_FIELD_NAME = "locationsServedCoordinates"
+export const GLOBAL_FIELD_NAME = "global"
 
 export const COORDINATES_DELIMETER = ','
 export const TAGS_LIST_DELIMETER = ','
