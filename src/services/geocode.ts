@@ -41,7 +41,7 @@ export function geocodeRow(
     throw new Error(`Geocoding failed. ${message}`)
   }
 
-  if (locationsServedCoordinates.length != 0) {
+  if (locationsServedAddresses.length != 0) {
     try {
       locationsServedCoordinates = toCoordinatesList(locationsServedAddresses)
     }
