@@ -6,7 +6,7 @@ AppScript code for the HHI Map's Stakeholder Submission Form.
 Includes three triggers:
 - On stakeholder update, sends the stakeholder mail indicating the status (accept/reject)
 - On stakeholder accept, geocodes the locations to coordinates, and syncs the approved sheet with the realtime database
-- On stakeholder rejection, re-syncs the approved sheet with the realtime database
+- On stakeholder update but nonapproval, re-syncs the approved sheet with the realtime database
 
 Parent project: https://github.com/DSSD-Madison/HHI
 
