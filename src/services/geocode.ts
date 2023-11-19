@@ -29,7 +29,7 @@ export function geocodeRow(
 
   // Convert the addresses
   let headquarterCoordinates: [lat: number, lng: number]
-  let locationsServedCoordinates: [lat: number, lng: number][]
+  let locationsServedCoordinates: [lat: number, lng: number][] = []
   try {
     headquarterCoordinates = toCoordinates(headquarterAddress);
   }
@@ -41,15 +41,17 @@ export function geocodeRow(
     throw new Error(`Geocoding failed. ${message}`)
   }
 
-  try {
-    locationsServedCoordinates = toCoordinatesList(locationsServedAddresses)
-  }
-  catch (e) {
-    const message = `Failed to geocode locations: ${e.message}`
-    Logger.log(message)
-    highlightProcessingError(sheet, row, LOCATIONS_SERVED_COLUMN_NUMBER, message)
-    resetStakeholderStatus(row)
-    throw new Error(`Geocoding failed. ${message}`)
+  if (locationsServedCoordinates.length != 0) {
+    try {
+      locationsServedCoordinates = toCoordinatesList(locationsServedAddresses)
+    }
+    catch (e) {
+      const message = `Failed to geocode locations: ${e.message}`
+      Logger.log(message)
+      highlightProcessingError(sheet, row, LOCATIONS_SERVED_COLUMN_NUMBER, message)
+      resetStakeholderStatus(row)
+      throw new Error(`Geocoding failed. ${message}`)
+    }  
   }
 
   // Put them into coordinate cells in the format 'lat, lng' and 'lat1, lng1;lat2, lng2'
