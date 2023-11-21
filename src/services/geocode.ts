@@ -22,35 +22,40 @@ export function geocodeRow(
   const headquarterAddress: string = sheet
     .getRange(row, HEADQUARTER_COLUMN_NUMBER)
     .getValue();
-  const locationsServedAddresses: string[] = sheet
+
+  // Checking if this is empty, as splitting on an empty string results in length 1
+  const locationsServedAddressesString = sheet
     .getRange(row, LOCATIONS_SERVED_COLUMN_NUMBER)
     .getValue()
+  
+  const locationsServedAddresses: string[] = locationsServedAddressesString
     .split(LOCATIONS_SERVED_LIST_DELIMETER);
 
   // Convert the addresses
   let headquarterCoordinates: [lat: number, lng: number]
-  let locationsServedCoordinates: [lat: number, lng: number][] = []
   try {
     headquarterCoordinates = toCoordinates(headquarterAddress);
   }
   catch (e) {
-    const message = `Failed to geocode headquarters: ${e.message}`
-    Logger.log(message)
+    const message = `Failed to geocode headquarters: `
+    Logger.log(message + e)
     highlightProcessingError(sheet, row, HEADQUARTER_COLUMN_NUMBER, message)
     resetStakeholderStatus(row)
-    throw new Error(`Geocoding failed. ${message}`)
+    throw new Error(`Geocoding failed. ${message + e.message}`)
   }
 
-  if (locationsServedAddresses.length != 0) {
+  let locationsServedCoordinates: [lat: number, lng: number][] = []
+  if (locationsServedAddressesString.length > 0) {
+    if (DEBUG) Logger.log("Geocoding locations served...")
     try {
       locationsServedCoordinates = toCoordinatesList(locationsServedAddresses)
     }
     catch (e) {
-      const message = `Failed to geocode locations: ${e.message}`
-      Logger.log(message)
+      const message = `Failed to geocode locations: `
+      Logger.log(message + e)
       highlightProcessingError(sheet, row, LOCATIONS_SERVED_COLUMN_NUMBER, message)
       resetStakeholderStatus(row)
-      throw new Error(`Geocoding failed. ${message}`)
+      throw new Error(`Geocoding failed. ${message + e.message}`)
     }  
   }
 
