@@ -37,6 +37,8 @@ export function syncApprovedSheet() {
     // True only if locations served is blank
     rowObject[GLOBAL_FIELD_NAME] = false
 
+    // Note: Firebase does not handle empty arrays:
+    // https://firebase.blog/posts/2014/04/best-practices-arrays-in-firebase
     for (var j = 0; j < headers.length; j++) {
       // Handle various types of properties specifically
       // Convert delimeted lists to actual lists
@@ -49,13 +51,19 @@ export function syncApprovedSheet() {
             rowObject[headers[j]] = coordinateStringToJSON(rowData[j]);
             break;
         case LOCATIONS_SERVED_FIELD_NAME:
-          if (rowData[j] === "")
+          if (rowData[j] === "") {
             rowObject[GLOBAL_FIELD_NAME] = true
+            break;
+          }
 
           rowObject[headers[j]] = rowData[j].split(LOCATIONS_SERVED_LIST_DELIMETER)
                                             .map(location => location.trim())
           break;
         case LOCATIONS_SERVED_COORDINATES_FIELD_NAME:
+          if (rowData[j] === "") {
+            break;
+          }
+
           rowObject[headers[j]] = rowData[j].split(LOCATIONS_SERVED_LIST_DELIMETER)
                                             .map(coordinate => coordinate.trim())
                                             .map(coordinateStringToJSON)
