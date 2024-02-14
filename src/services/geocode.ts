@@ -76,10 +76,16 @@ function toCoordinatesList(addresses: string[]): [lat: number, lng: number][] {
 
 // Converts an address to coordinates lat, lng
 function toCoordinates(address: string): [lat: number, lng: number] {
+  if (address.length == 0) {
+    throw new Error("Cannot geocode an empty string (check for an accidental repeated delimeter use or use at the end)")
+  }
+
   const geocoder = Maps.newGeocoder().geocode(address)
 
   // Fetch the first result from the geocoder
   const results = geocoder.results
+
+  if (DEBUG) Logger.log("Geocoding response: " + results)
 
   if (results.length == 0) {
     throw new Error("Geocoding failed for address: " + address)
