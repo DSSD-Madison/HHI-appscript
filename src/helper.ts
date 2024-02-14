@@ -1,17 +1,37 @@
 import {
   APPROVED,
   REJECTED,
-  FORM_SHEET_ID,
-  APPROVAL_COLUMN_NUMBER,
+  SUBMISSION_SHEET_ID,
+  STATUS_COLUMN_NUMBER,
+  DEBUG,
+  ADMIN_EMAIL,
 } from "./constants";
+import { sendEmail } from "./services/email";
 
-const DEBUG = false;
+// Delete all the existing triggers for the project
+export function deleteTriggers() {
+  if (DEBUG) { Logger.log("Deleting all triggers...") }
+  let triggers = ScriptApp.getProjectTriggers()
+  for (var i = 0; i < triggers.length; i++) {
+    ScriptApp.deleteTrigger(triggers[i])
+  }
+}
 
-// Check if event is approving a stakeholder
-export function isStakeholderApproved(
+// A wrapper for triggers to catch errors, log them, and notify an administrative email about issues
+export function triggerWrapper(triggerCallback: () => void) {
+  try {
+    triggerCallback()
+  } catch (e) {
+    console.error(e)
+    sendEmail("Error in trigger", e.message, ADMIN_EMAIL)
+  }
+}
+
+// Check if event is approving a submission
+export function isSubmissionApproved(
   e: GoogleAppsScript.Events.SheetsOnEdit
 ): boolean {
-  if (!isStakeholderStatusUpdate(e)) {
+  if (!isSubmissionStatusUpdate(e)) {
     return false;
   }
 
@@ -19,10 +39,10 @@ export function isStakeholderApproved(
 }
 
 // Check if event is rejecting a stakeholder
-export function isStakeholderRejected(
+export function isSubmissionRejected(
   e: GoogleAppsScript.Events.SheetsOnEdit
 ): boolean {
-  if (!isStakeholderStatusUpdate(e)) {
+  if (!isSubmissionStatusUpdate(e)) {
     return false;
   }
 
@@ -30,16 +50,16 @@ export function isStakeholderRejected(
 }
 
 // Check if event is updating a stakeholder status
-export function isStakeholderStatusUpdate(
+function isSubmissionStatusUpdate(
   e: GoogleAppsScript.Events.SheetsOnEdit
 ): boolean {
   const sheet = e.source.getActiveSheet();
   const range = e.range;
 
   // Check if sheet is the form sheet
-  if (sheet.getSheetId() !== FORM_SHEET_ID) {
+  if (sheet.getSheetId() !== SUBMISSION_SHEET_ID) {
     if (DEBUG)
-      Logger.log(`sheet mismatch ${sheet.getSheetId()}, ${FORM_SHEET_ID}`);
+      Logger.log(`sheet mismatch ${sheet.getSheetId()}, ${SUBMISSION_SHEET_ID}`);
     return false;
   }
 
@@ -50,10 +70,10 @@ export function isStakeholderStatusUpdate(
   }
 
   // Check if column matches the approval column
-  if (range.getColumn() !== APPROVAL_COLUMN_NUMBER) {
+  if (range.getColumn() !== STATUS_COLUMN_NUMBER) {
     if (DEBUG)
       Logger.log(
-        `column mismatch ${range.getColumn()}, ${APPROVAL_COLUMN_NUMBER}`
+        `column mismatch ${range.getColumn()}, ${STATUS_COLUMN_NUMBER}`
       );
     return false;
   }
@@ -61,10 +81,3 @@ export function isStakeholderStatusUpdate(
   return true;
 }
 
-// Delete all the existing triggers for the project
-export function deleteTriggers() {
-  var triggers = ScriptApp.getProjectTriggers()
-  for (var i = 0; i < triggers.length; i++) {
-    ScriptApp.deleteTrigger(triggers[i])
-  }
-}

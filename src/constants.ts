@@ -6,8 +6,11 @@ export const SPREADSHEET_ID = "1TI0WNrGsTKC_lZPXhcwxK4fHsc2-A88GysVtidI75z0"
 export const SUBMISSION_SHEET_ID = 664466786
 
 export const EMAIL_COLUMN_NUMBER = columnToNumber('B')
-export const APPROVAL_COLUMN_NUMBER = columnToNumber('K')
+export const STATUS_COLUMN_NUMBER = columnToNumber('K')
 export const REJECTION_REASON_COLUMN_NUMBER = columnToNumber('L')
+
+export const COPY_START_COLUMN_NUMBER = columnToNumber('C')
+export const COPY_END_COLUMN_NUMBER = columnToNumber('J')
 
 export const APPROVED = 'Approved'
 export const REJECTED = 'Rejected'

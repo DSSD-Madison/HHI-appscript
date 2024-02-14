@@ -1,4 +1,4 @@
-import { APPROVAL_COLUMN_NUMBER, CELL_ERROR_HIGHLIGHT_COLOR, DEBUG, FORM_SHEET_ID, SPREADSHEET_ID } from "../constants";
+import { STATUS_COLUMN_NUMBER, CELL_ERROR_HIGHLIGHT_COLOR, DEBUG, FORM_SHEET_ID, SPREADSHEET_ID } from "../constants";
 
 // Highlights a cell and adds a note to it to notify of an error
 export function highlightProcessingError(
@@ -23,5 +23,5 @@ export function resetStakeholderStatus(row: number) {
   .getSheets()
   .filter((s) => s.getSheetId() === FORM_SHEET_ID)[0];
 
-  sheet.getRange(row, APPROVAL_COLUMN_NUMBER).setValue('')
+  sheet.getRange(row, STATUS_COLUMN_NUMBER).setValue('')
 }
