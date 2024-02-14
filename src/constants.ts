@@ -1,22 +1,22 @@
 export const DEBUG = true
 
-export const SPREADSHEET_ID = "1TI0WNrGsTKC_lZPXhcwxK4fHsc2-A88GysVtidI75z0"
+export const SPREADSHEET_ID = "1rbPw3-YQEHwKMgkMxJck_oP661NyuYFVaTXd33F0ZcA"
 
 /* Submission Sheet */
-export const SUBMISSION_SHEET_ID = 664466786
+export const SUBMISSION_SHEET_ID = 0
 
 export const EMAIL_COLUMN_NUMBER = columnToNumber('B')
 export const STATUS_COLUMN_NUMBER = columnToNumber('K')
 export const REJECTION_REASON_COLUMN_NUMBER = columnToNumber('L')
 
-export const COPY_START_COLUMN_NUMBER = columnToNumber('C')
-export const COPY_END_COLUMN_NUMBER = columnToNumber('J')
+export const COPY_START_COLUMN = 'C'
+export const COPY_END_COLUMN = 'J'
 
 export const APPROVED = 'Approved'
 export const REJECTED = 'Rejected'
 
 /* Data Sheet */
-export const DATA_SHEET_ID = 1940570428
+export const DATA_SHEET_ID = 1481298901
 
 export const HEADQUARTER_COLUMN_NUMBER = columnToNumber('H')
 export const LOCATIONS_SERVED_COLUMN_NUMBER = columnToNumber('I')

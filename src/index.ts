@@ -1,5 +1,5 @@
 import { DEBUG, SPREADSHEET_ID, SUBMISSION_SHEET_ID } from "./constants";
-import { deleteTriggers, triggerWrapper } from "./helper";
+import { deleteTriggers } from "./helper";
 import { onSubmissionSheetEdit } from "./sheets/submission";
 
 
@@ -11,13 +11,13 @@ function createTriggers() {
 
   if (DEBUG) { Logger.log ("Creating triggers...")}
 
-  ScriptApp.newTrigger(onEdit.name)
+  ScriptApp.newTrigger(onEditCustom.name)
     .forSpreadsheet(spreadsheet)
     .onEdit()
     .create();
 }
 
-function onEdit(e: GoogleAppsScript.Events.SheetsOnEdit) {
+function onEditCustom(e: GoogleAppsScript.Events.SheetsOnEdit) {
   if (e.source.getActiveSheet().getSheetId() === SUBMISSION_SHEET_ID) {
     onSubmissionSheetEdit(e)
   }

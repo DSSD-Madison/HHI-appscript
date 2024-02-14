@@ -13,8 +13,8 @@
 import {
   APPROVED,
   APPROVED_MESSAGE,
-  COPY_END_COLUMN_NUMBER,
-  COPY_START_COLUMN_NUMBER,
+  COPY_END_COLUMN,
+  COPY_START_COLUMN,
   DATA_SHEET_ID,
   DEBUG,
   EMAIL_COLUMN_NUMBER,
@@ -79,10 +79,15 @@ function onSubmissionApproved(
 
   // Copy data over
   if (DEBUG) Logger.log("Copying data...");
-  const rangeToCopy = `${COPY_START_COLUMN_NUMBER}${row}:${COPY_END_COLUMN_NUMBER}${row}`
+  const rangeToCopy = `${COPY_START_COLUMN}${row}:${COPY_END_COLUMN}${row}`
   const valuesToCopy = submissionSheet.getRange(rangeToCopy).getValues();
 
+  Logger.log(rangeToCopy)
+  Logger.log(valuesToCopy)
+  Logger.log(valuesToCopy[0])
+
   dataSheet.appendRow(valuesToCopy[0]);
+  if (DEBUG) Logger.log("Data copied.");
 }
 
 // Check if event is rejecting a stakeholder
