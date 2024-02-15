@@ -1,8 +1,7 @@
 import {
   ADMIN_EMAIL_A1,
   CELL_ERROR_HIGHLIGHT_COLOR_A1,
-  DEBUG,
-  SETTING_SHEET_ID,
+  DEBUG
 } from "../constants";
 import { sendEmail } from "./email";
 import { getSetting } from "./settings";
@@ -31,7 +30,7 @@ export function wrapper(callback: () => void) {
   try {
     callback();
   } catch (e) {
-    sendEmail("Error in trigger", e.message, getSetting(ADMIN_EMAIL_A1));
-    throw new Error(e.message);
+    sendEmail(getSetting(ADMIN_EMAIL_A1), "Error in trigger", e.message);
+    throw e;
   }
 }
