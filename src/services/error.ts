@@ -14,5 +14,5 @@ export function highlightProcessingError(
     .setBackground(CELL_ERROR_HIGHLIGHT_COLOR.toString())
     .setNote(message);
 
-  SpreadsheetApp.getUi().alert(message);
+  SpreadsheetApp.getUi().alert(`An error occurred during processing. ${message}`);
 }

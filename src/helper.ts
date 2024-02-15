@@ -13,12 +13,12 @@ export function deleteTriggers() {
   }
 }
 
-// A wrapper for triggers to catch errors, log them, and notify an administrative email about issues
-export function triggerWrapper(triggerCallback: () => void) {
+// A wrapper to catch errors and notify an administrative email about issues
+export function wrapper(callback: () => void) {
   try {
-    triggerCallback()
+    callback()
   } catch (e) {
-    console.error(e)
     sendEmail("Error in trigger", e.message, ADMIN_EMAIL)
+    throw new Error(e.message)
   }
 }
