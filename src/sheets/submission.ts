@@ -69,14 +69,14 @@ function onSubmissionRejected(
 
   const subject = getSetting(EMAIL_SUBJECT_A1)
 
-  let response = SpreadsheetApp.getUi().prompt(
+  let response = SpreadsheetApp.getUi().alert(
     `Sending Rejection to ${email}`,
     `Subject: ${subject}
 Body: ${message}`,
-    GoogleAppsScript.Base.ButtonSet.OK_CANCEL
+    SpreadsheetApp.getUi().ButtonSet.OK_CANCEL
   );
 
-  if (response.getSelectedButton() != GoogleAppsScript.Base.Button.YES) {
+  if (response !== SpreadsheetApp.getUi().Button.OK) {
     SpreadsheetApp.getUi().alert(`Cancelled send. Reverting rejection.`);
     sheet.getRange(row, STATUS_COLUMN_NUMBER).setValue(null)
     return;
@@ -101,14 +101,14 @@ function onSubmissionApproved(
 
   const subject = getSetting(EMAIL_SUBJECT_A1)
 
-  let response = SpreadsheetApp.getUi().prompt(
+  let response = SpreadsheetApp.getUi().alert(
     `Sending Approval to ${email}`,
     `Subject: ${subject}
 Body: ${message}`,
-    GoogleAppsScript.Base.ButtonSet.OK_CANCEL
+    SpreadsheetApp.getUi().ButtonSet.OK_CANCEL
   );
 
-  if (response.getSelectedButton() != GoogleAppsScript.Base.Button.YES) {
+  if (response !== SpreadsheetApp.getUi().Button.OK) {
     SpreadsheetApp.getUi().alert(`Cancelled send. Reverting approval.`);
     submissionSheet.getRange(row, STATUS_COLUMN_NUMBER).setValue(null)
     return;
