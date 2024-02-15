@@ -1,5 +1,11 @@
-import { ADMIN_EMAIL, CELL_ERROR_HIGHLIGHT_COLOR, DEBUG } from "../constants";
+import {
+  ADMIN_EMAIL_A1,
+  CELL_ERROR_HIGHLIGHT_COLOR_A1,
+  DEBUG,
+  SETTING_SHEET_ID,
+} from "../constants";
 import { sendEmail } from "./email";
+import { getSetting } from "./settings";
 
 // Highlights a cell and adds a note to it to notify of an error
 export function highlightProcessingError(
@@ -12,18 +18,20 @@ export function highlightProcessingError(
 
   sheet
     .getRange(row, column)
-    .setBackground(CELL_ERROR_HIGHLIGHT_COLOR.toString())
+    .setBackground(getSetting(CELL_ERROR_HIGHLIGHT_COLOR_A1).toString())
     .setNote(message);
 
-  SpreadsheetApp.getUi().alert(`An error occurred during processing. ${message}`);
+  SpreadsheetApp.getUi().alert(
+    `An error occurred during processing. ${message}`
+  );
 }
 
 // A wrapper to catch errors and notify an administrative email about issues
 export function wrapper(callback: () => void) {
   try {
-    callback()
+    callback();
   } catch (e) {
-    sendEmail("Error in trigger", e.message, ADMIN_EMAIL)
-    throw new Error(e.message)
+    sendEmail("Error in trigger", e.message, getSetting(ADMIN_EMAIL_A1));
+    throw new Error(e.message);
   }
 }

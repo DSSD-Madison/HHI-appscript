@@ -30,22 +30,25 @@ export const TAGS_LIST_DELIMETER = ','
 export const COORDINATES_DELIMETER = ','
 export const LOCATIONS_SERVED_LIST_DELIMETER = ';'
 
-/* Services */
+/* Setting Sheet */
+/* Note: Constants referencing A1 refer to A1 notation, or a specific cell on Google Sheets */
+export const SETTING_SHEET_ID = 740227076
+
+// Admin email, receives trigger error emails
+export const ADMIN_EMAIL_A1 = "B2"
+// A color to highlight cells. A hex color code of yellow
+export const CELL_ERROR_HIGHLIGHT_COLOR_A1 = "B3"
+
+// Email constants for sending out to stakeholders
+export const EMAIL_SUBJECT_A1 = "B6"
+export const APPROVED_MESSAGE_A1 = "B7"
+export const REJECTED_MESSAGE_A1 = "B8"
+export const REJECTED_WITH_REASON_MESSAGE_A1 = "B9" // contains {reason} to fill with the reason
+export const REJECTED_WITH_REASON_REPLACE = "{reason}"
 
 /* Database */
 export const REALTIME_DATABASE_URL = "https://hhimap-default-rtdb.firebaseio.com/"
 
-/* Email */ 
-// Admin email, receives trigger error emails
-export const ADMIN_EMAIL = "gxue5@wisc.edu"
-// A color to highlight cells. A hex color code of yellow
-export const CELL_ERROR_HIGHLIGHT_COLOR = "#ffff00"
-
-// Email constants for sending out to stakeholders
-export const EMAIL_SUBJECT = 'Signal Program Map Submission Update'
-export const APPROVED_MESSAGE = 'Your submission has been approved!'
-export const REJECTED_MESSAGE = 'Your submission has unforunately been rejected.'
-export const REJECTED_REASON_MESSAGE = 'Rejection reason:'
 
 // Converts column string (A, B, C, ...) to column number (1, 2, 3, ...)
 function columnToNumber(column: string) {

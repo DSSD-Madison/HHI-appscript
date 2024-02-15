@@ -12,20 +12,22 @@
 
 import {
   APPROVED,
-  APPROVED_MESSAGE,
+  APPROVED_MESSAGE_A1,
   COPY_END_COLUMN,
   COPY_START_COLUMN,
   DATA_SHEET_ID,
   DEBUG,
   EMAIL_COLUMN_NUMBER,
-  EMAIL_SUBJECT,
+  EMAIL_SUBJECT_A1,
   REJECTED,
-  REJECTED_MESSAGE,
-  REJECTED_REASON_MESSAGE,
+  REJECTED_MESSAGE_A1,
+  REJECTED_WITH_REASON_MESSAGE_A1,
+  REJECTED_WITH_REASON_REPLACE,
   REJECTION_REASON_COLUMN_NUMBER,
   STATUS_COLUMN_NUMBER,
 } from "../constants";
 import { sendEmail } from "../services/email";
+import { getSetting } from "../services/settings";
 
 export function onSubmissionSheetEdit(e: GoogleAppsScript.Events.SheetsOnEdit) {
   if (DEBUG) Logger.log("Submission Sheet modified.");
@@ -55,13 +57,33 @@ function onSubmissionRejected(
     .getRange(row, REJECTION_REASON_COLUMN_NUMBER)
     .getValue();
 
-  let message = REJECTED_MESSAGE;
+  let message = "";
   if (reason.trim().length != 0) {
-    message += ` ${REJECTED_REASON_MESSAGE} ${reason}`;
+    message = getSetting(REJECTED_WITH_REASON_MESSAGE_A1).replace(
+      REJECTED_WITH_REASON_REPLACE,
+      reason
+    );
+  } else {
+    message = getSetting(REJECTED_MESSAGE_A1);
   }
 
-  sendEmail(email, EMAIL_SUBJECT, message);
-  SpreadsheetApp.getUi().alert(`Sent rejection email to ${email}.`)
+  const subject = getSetting(EMAIL_SUBJECT_A1)
+
+  let response = SpreadsheetApp.getUi().prompt(
+    `Sending Rejection to ${email}`,
+    `Subject: ${subject}
+Body: ${message}`,
+    GoogleAppsScript.Base.ButtonSet.OK_CANCEL
+  );
+
+  if (response.getSelectedButton() != GoogleAppsScript.Base.Button.YES) {
+    SpreadsheetApp.getUi().alert(`Cancelled send. Reverting rejection.`);
+    sheet.getRange(row, STATUS_COLUMN_NUMBER).setValue(null)
+    return;
+  }
+
+  sendEmail(email, subject, message);
+  SpreadsheetApp.getUi().alert(`Sent rejection email to ${email}.`);
 }
 
 function onSubmissionApproved(
@@ -72,15 +94,32 @@ function onSubmissionApproved(
   // Send approval email
   if (DEBUG) Logger.log("Sending approval email...");
 
-  const email: string = submissionSheet.getRange(row, EMAIL_COLUMN_NUMBER).getValue();
-  let message = APPROVED_MESSAGE;
+  const email: string = submissionSheet
+    .getRange(row, EMAIL_COLUMN_NUMBER)
+    .getValue();
+  let message = getSetting(APPROVED_MESSAGE_A1);
 
-  sendEmail(email, EMAIL_SUBJECT, message);
-  SpreadsheetApp.getUi().alert(`Sent approval email to ${email}.`)
+  const subject = getSetting(EMAIL_SUBJECT_A1)
+
+  let response = SpreadsheetApp.getUi().prompt(
+    `Sending Approval to ${email}`,
+    `Subject: ${subject}
+Body: ${message}`,
+    GoogleAppsScript.Base.ButtonSet.OK_CANCEL
+  );
+
+  if (response.getSelectedButton() != GoogleAppsScript.Base.Button.YES) {
+    SpreadsheetApp.getUi().alert(`Cancelled send. Reverting approval.`);
+    submissionSheet.getRange(row, STATUS_COLUMN_NUMBER).setValue(null)
+    return;
+  }
+
+  sendEmail(email, subject, message);
+  SpreadsheetApp.getUi().alert(`Sent approval email to ${email}.`);
 
   // Copy data over
   if (DEBUG) Logger.log("Copying data...");
-  const rangeToCopy = `${COPY_START_COLUMN}${row}:${COPY_END_COLUMN}${row}`
+  const rangeToCopy = `${COPY_START_COLUMN}${row}:${COPY_END_COLUMN}${row}`;
   const valuesToCopy = submissionSheet.getRange(rangeToCopy).getValues();
 
   dataSheet.appendRow(valuesToCopy[0]);
