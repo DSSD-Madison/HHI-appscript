@@ -18,17 +18,17 @@ export const REJECTED = 'Rejected'
 /* Data Sheet */
 export const DATA_SHEET_ID = 1481298901
 
-export const HEADQUARTER_COLUMN_NUMBER = columnToNumber('H')
-export const LOCATIONS_SERVED_COLUMN_NUMBER = columnToNumber('I')
+export const HEADQUARTER_COLUMN_NUMBER = columnToNumber('F')
+export const LOCATIONS_SERVED_COLUMN_NUMBER = columnToNumber('G')
+export const TAGS_COLUMN_NUMBER = columnToNumber('H')
 
-export const HEADQUARTER_COORDINATES_COLUMN_NUMBER = columnToNumber('K')
-export const LOCATIONS_SERVED_COORDINATES_COLUMN_NUMBER = columnToNumber('L')
-export const GLOBAL_COLUMN_NUMBER = columnToNumber('M')
+export const HEADQUARTER_COORDINATES_COLUMN_NUMBER = columnToNumber('I')
+export const LOCATIONS_SERVED_COORDINATES_COLUMN_NUMBER = columnToNumber('J')
+export const GLOBAL_COLUMN_NUMBER = columnToNumber('K')
 
 export const TAGS_LIST_DELIMETER = ','
-export const LOCATIONS_SERVED_LIST_DELIMETER = ';'
 export const COORDINATES_DELIMETER = ','
-
+export const LOCATIONS_SERVED_LIST_DELIMETER = ';'
 
 /* Services */
 

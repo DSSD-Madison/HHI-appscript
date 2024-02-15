@@ -82,10 +82,6 @@ function onSubmissionApproved(
   const rangeToCopy = `${COPY_START_COLUMN}${row}:${COPY_END_COLUMN}${row}`
   const valuesToCopy = submissionSheet.getRange(rangeToCopy).getValues();
 
-  Logger.log(rangeToCopy)
-  Logger.log(valuesToCopy)
-  Logger.log(valuesToCopy[0])
-
   dataSheet.appendRow(valuesToCopy[0]);
   if (DEBUG) Logger.log("Data copied.");
 }
