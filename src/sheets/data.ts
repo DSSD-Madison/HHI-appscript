@@ -79,7 +79,7 @@ export function onRecalculate() {
     }
   })
 
-  SpreadsheetApp.getUi().alert(`Recalculated data. Updated ${rowsUpdated} row(s)`)
+  SpreadsheetApp.getUi().alert(`Recalculated data. Updated ${rowsUpdated} row(s).`)
   if (DEBUG) Logger.log("Data recalculated.");
 }
 

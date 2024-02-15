@@ -61,7 +61,7 @@ function onSubmissionRejected(
   }
 
   sendEmail(email, EMAIL_SUBJECT, message);
-  SpreadsheetApp.getUi().alert(`Sent rejection email to ${email}`)
+  SpreadsheetApp.getUi().alert(`Sent rejection email to ${email}.`)
 }
 
 function onSubmissionApproved(
@@ -76,7 +76,7 @@ function onSubmissionApproved(
   let message = APPROVED_MESSAGE;
 
   sendEmail(email, EMAIL_SUBJECT, message);
-  SpreadsheetApp.getUi().alert(`Sent approval email to ${email}`)
+  SpreadsheetApp.getUi().alert(`Sent approval email to ${email}.`)
 
   // Copy data over
   if (DEBUG) Logger.log("Copying data...");
