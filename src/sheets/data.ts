@@ -44,6 +44,7 @@ export function onSync() {
   // sendData(getData(sheet))
   Logger.log(getData(sheet));
 
+  SpreadsheetApp.getUi().alert("Synced all data successfully.")
   if (DEBUG) Logger.log("Data synced.");
 }
 
@@ -57,11 +58,14 @@ export function onRecalculate() {
   const rows = sheet.getDataRange().getValues();
   rows.shift(); // skip headers
 
+  let rowsUpdated = 0;
+
   rows.forEach((d, i) => {
     // 1-based index conversion + accounting for header
     const row = i + 2;
     if (isRowChanged(row, d)) {
       if (DEBUG) Logger.log(`Row ${row} changed. Recalculating fields...`);
+      rowsUpdated += 1;
 
       calculateRowFields(sheet, row);
       
@@ -75,6 +79,7 @@ export function onRecalculate() {
     }
   })
 
+  SpreadsheetApp.getUi().alert(`Recalculated data. Updated ${rowsUpdated} row(s)`)
   if (DEBUG) Logger.log("Data recalculated.");
 }
 

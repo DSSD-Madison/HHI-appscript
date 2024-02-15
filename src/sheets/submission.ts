@@ -61,6 +61,7 @@ function onSubmissionRejected(
   }
 
   sendEmail(email, EMAIL_SUBJECT, message);
+  SpreadsheetApp.getUi().alert(`Sent rejection email to ${email}`)
 }
 
 function onSubmissionApproved(
@@ -71,11 +72,11 @@ function onSubmissionApproved(
   // Send approval email
   if (DEBUG) Logger.log("Sending approval email...");
 
-
   const email: string = submissionSheet.getRange(row, EMAIL_COLUMN_NUMBER).getValue();
   let message = APPROVED_MESSAGE;
 
   sendEmail(email, EMAIL_SUBJECT, message);
+  SpreadsheetApp.getUi().alert(`Sent approval email to ${email}`)
 
   // Copy data over
   if (DEBUG) Logger.log("Copying data...");
@@ -83,6 +84,7 @@ function onSubmissionApproved(
   const valuesToCopy = submissionSheet.getRange(rangeToCopy).getValues();
 
   dataSheet.appendRow(valuesToCopy[0]);
+
   if (DEBUG) Logger.log("Data copied.");
 }
 
