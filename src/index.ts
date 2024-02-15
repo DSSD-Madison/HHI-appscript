@@ -1,8 +1,7 @@
 import { DEBUG, SPREADSHEET_ID, SUBMISSION_SHEET_ID } from "./constants";
-import { deleteTriggers, wrapper } from "./helper";
+import { wrapper } from "./services/error";
 import { onRecalculate, onSync } from "./sheets/data";
 import { onSubmissionSheetEdit } from "./sheets/submission";
-
 
 // Resets and creates desired triggers
 function resetTriggers() {
@@ -14,6 +13,15 @@ function resetTriggers() {
     .forSpreadsheet(spreadsheet)
     .onEdit()
     .create();
+}
+
+// Delete all the existing triggers for the project
+function deleteTriggers() {
+  if (DEBUG) { Logger.log("Deleting all triggers...") }
+  let triggers = ScriptApp.getProjectTriggers()
+  for (var i = 0; i < triggers.length; i++) {
+    ScriptApp.deleteTrigger(triggers[i])
+  }
 }
 
 function onEditCustom(e: GoogleAppsScript.Events.SheetsOnEdit) {
