@@ -1,9 +1,9 @@
 export const DEBUG = true
 
-export const SPREADSHEET_ID = "1rbPw3-YQEHwKMgkMxJck_oP661NyuYFVaTXd33F0ZcA"
+export const SPREADSHEET_ID = "1TI0WNrGsTKC_lZPXhcwxK4fHsc2-A88GysVtidI75z0"
 
 /* Submission Sheet */
-export const SUBMISSION_SHEET_ID = 0
+export const SUBMISSION_SHEET_ID = 664466786
 
 export const EMAIL_COLUMN_NUMBER = columnToNumber('B')
 export const STATUS_COLUMN_NUMBER = columnToNumber('K')
@@ -16,7 +16,7 @@ export const APPROVED = 'Approved'
 export const REJECTED = 'Rejected'
 
 /* Data Sheet */
-export const DATA_SHEET_ID = 1481298901
+export const DATA_SHEET_ID = 2030863542
 
 export const HEADQUARTER_COLUMN_NUMBER = columnToNumber('F')
 export const LOCATIONS_SERVED_COLUMN_NUMBER = columnToNumber('G')
@@ -32,7 +32,7 @@ export const LOCATIONS_SERVED_LIST_DELIMETER = ';'
 
 /* Setting Sheet */
 /* Note: Constants referencing A1 refer to A1 notation, or a specific cell on Google Sheets */
-export const SETTING_SHEET_ID = 740227076
+export const SETTING_SHEET_ID = 400991685
 
 // Admin email, receives trigger error emails
 export const ADMIN_EMAIL_A1 = "B2"

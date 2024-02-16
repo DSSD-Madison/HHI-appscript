@@ -41,8 +41,8 @@ export function onSync() {
   onRecalculate();
   
   SpreadsheetApp.flush();
-  // sendData(getData(sheet))
-  Logger.log(getData(sheet));
+  if (DEBUG) Logger.log(getData(sheet));
+  sendData(getData(sheet))
 
   SpreadsheetApp.getUi().alert("Synced all data successfully.")
   if (DEBUG) Logger.log("Data synced.");
