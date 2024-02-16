@@ -73,17 +73,21 @@ function onSubmissionRejected(
     `Sending Rejection to ${email}`,
     `Subject: ${subject}
 Body: ${message}`,
-    SpreadsheetApp.getUi().ButtonSet.OK_CANCEL
+    SpreadsheetApp.getUi().ButtonSet.YES_NO_CANCEL
   );
 
-  if (response !== SpreadsheetApp.getUi().Button.OK) {
+  if (response === SpreadsheetApp.getUi().Button.CANCEL) {
     SpreadsheetApp.getUi().alert(`Cancelled send. Reverting rejection.`);
     sheet.getRange(row, STATUS_COLUMN_NUMBER).setValue(null)
     return;
   }
-
-  sendEmail(email, subject, message);
-  SpreadsheetApp.getUi().alert(`Sent rejection email to ${email}.`);
+  else if (response === SpreadsheetApp.getUi().Button.YES) {
+    sendEmail(email, subject, message);
+    SpreadsheetApp.getUi().alert(`Sent rejection email to ${email}.`);
+  }
+  else {
+    SpreadsheetApp.getUi().alert(`Skipped sending email.`);
+  }
 }
 
 function onSubmissionApproved(
@@ -102,21 +106,25 @@ function onSubmissionApproved(
   const subject = getSetting(EMAIL_SUBJECT_A1)
 
   let response = SpreadsheetApp.getUi().alert(
-    `Sending Approval to ${email}`,
+    `Send Approval to ${email}?`,
     `Subject: ${subject}
 Body: ${message}`,
-    SpreadsheetApp.getUi().ButtonSet.OK_CANCEL
+    SpreadsheetApp.getUi().ButtonSet.YES_NO_CANCEL
   );
 
-  if (response !== SpreadsheetApp.getUi().Button.OK) {
+  if (response === SpreadsheetApp.getUi().Button.CANCEL) {
     SpreadsheetApp.getUi().alert(`Cancelled send. Reverting approval.`);
     submissionSheet.getRange(row, STATUS_COLUMN_NUMBER).setValue(null)
     return;
   }
-
-  sendEmail(email, subject, message);
-  SpreadsheetApp.getUi().alert(`Sent approval email to ${email}.`);
-
+  else if (response === SpreadsheetApp.getUi().Button.YES) {
+    sendEmail(email, subject, message);
+    SpreadsheetApp.getUi().alert(`Sent approval email to ${email}.`);
+  }
+  else {
+    SpreadsheetApp.getUi().alert(`Skipped sending email.`);
+  }
+  
   // Copy data over
   if (DEBUG) Logger.log("Copying data...");
   const rangeToCopy = `${COPY_START_COLUMN}${row}:${COPY_END_COLUMN}${row}`;
