@@ -103,6 +103,8 @@ function geocodeHeadquarters(
   const headquarterAddress: string = sheet
     .getRange(row, HEADQUARTER_COLUMN_NUMBER)
     .getValue();
+  
+  if (DEBUG) Logger.log(headquarterAddress)
 
   let headquarterCoordinates: [lat: number, lng: number];
 
@@ -131,11 +133,14 @@ function geocodeLocationsServed(
   const locationsServedAddresses: string[] = sheet
     .getRange(row, LOCATIONS_SERVED_COLUMN_NUMBER)
     .getValue()
-    .split(LOCATIONS_SERVED_LIST_DELIMETER);
+    .split(LOCATIONS_SERVED_LIST_DELIMETER)
+    .filter(s => s !== '');
+
+  if (DEBUG) Logger.log(locationsServedAddresses)
 
   let locationsServedCoordinates: [lat: number, lng: number][] = [];
 
-  if (locationsServedAddresses.length != 0) {
+  if (locationsServedAddresses.length !== 0) {
     try {
       locationsServedCoordinates = toCoordinatesList(locationsServedAddresses);
     } catch (e) {
@@ -170,11 +175,12 @@ function calculateGlobal(
   const locationsServedAddresses: string[] = sheet
     .getRange(row, LOCATIONS_SERVED_COLUMN_NUMBER)
     .getValue()
-    .split(LOCATIONS_SERVED_LIST_DELIMETER);
+    .split(LOCATIONS_SERVED_LIST_DELIMETER)
+    .filter(s => s !== '');
 
   // Whether or not the organization has a global presence.
   // True only if locations served is blank
-  const global = locationsServedAddresses.length == 0;
+  const global = locationsServedAddresses.length === 0;
 
   sheet.getRange(row, GLOBAL_COLUMN_NUMBER).setValue(global);
 }
@@ -199,6 +205,7 @@ function getData(sheet: GoogleAppsScript.Spreadsheet.Sheet) {
     const tagIndex = columnNumberToIndex(TAGS_COLUMN_NUMBER);
     rowObject[headers[tagIndex]] = row[tagIndex]
       .split(TAGS_LIST_DELIMETER)
+      .filter(s => s !== '')
       .map((tag) => tag.trim());
 
     const hqcIndex = columnNumberToIndex(HEADQUARTER_COORDINATES_COLUMN_NUMBER);
@@ -207,6 +214,7 @@ function getData(sheet: GoogleAppsScript.Spreadsheet.Sheet) {
     const lsIndex = columnNumberToIndex(LOCATIONS_SERVED_COLUMN_NUMBER);
     rowObject[headers[lsIndex]] = row[lsIndex]
       .split(LOCATIONS_SERVED_LIST_DELIMETER)
+      .filter(s => s !== '')
       .map((location) => location.trim());
 
     const lscIndex = columnNumberToIndex(
@@ -214,6 +222,7 @@ function getData(sheet: GoogleAppsScript.Spreadsheet.Sheet) {
     );
     rowObject[headers[lscIndex]] = row[lscIndex]
       .split(LOCATIONS_SERVED_LIST_DELIMETER)
+      .filter(s => s !== '')
       .map((coordinate) => coordinate.trim())
       .map(coordinateStringToJSON);
 
@@ -230,6 +239,7 @@ function columnNumberToIndex(columnNumber: number) {
 function coordinateStringToJSON(coordinate: String) {
   const coordinates = coordinate
     .split(COORDINATES_DELIMETER)
+    .filter(s => s !== '')
     .map((coordinate) => coordinate.trim())
     .map(Number);
 
