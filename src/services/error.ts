@@ -1,4 +1,10 @@
-import { APPROVAL_COLUMN_NUMBER, CELL_ERROR_HIGHLIGHT_COLOR, DEBUG, FORM_SHEET_ID, SPREADSHEET_ID } from "../constants";
+import {
+  ADMIN_EMAIL_A1,
+  CELL_ERROR_HIGHLIGHT_COLOR_A1,
+  DEBUG
+} from "../constants";
+import { sendEmail } from "./email";
+import { getSetting } from "./settings";
 
 // Highlights a cell and adds a note to it to notify of an error
 export function highlightProcessingError(
@@ -7,21 +13,24 @@ export function highlightProcessingError(
   column: number,
   message: string
 ) {
-  if (DEBUG) Logger.log("Highlighting processing error.")
-  
-  sheet.getRange(row, column)
-    .setBackground(CELL_ERROR_HIGHLIGHT_COLOR.toString())
-    .setNote(message)
+  if (DEBUG) Logger.log("Highlighting processing error.");
+
+  sheet
+    .getRange(row, column)
+    .setBackground(getSetting(CELL_ERROR_HIGHLIGHT_COLOR_A1).toString())
+    .setNote(message);
+
+  SpreadsheetApp.getUi().alert(
+    `An error occurred during processing. ${message}`
+  );
 }
 
-// Reset the status of a stakeholder to a default empty state on error
-export function resetStakeholderStatus(row: number) {
-  if (DEBUG) Logger.log("Resetting stakeholder status.")
-
-  // Get form sheet
-  const sheet = SpreadsheetApp.openById(SPREADSHEET_ID)
-  .getSheets()
-  .filter((s) => s.getSheetId() === FORM_SHEET_ID)[0];
-
-  sheet.getRange(row, APPROVAL_COLUMN_NUMBER).setValue('')
+// A wrapper to catch errors and notify an administrative email about issues
+export function wrapper(callback: () => void) {
+  try {
+    callback();
+  } catch (e) {
+    sendEmail(getSetting(ADMIN_EMAIL_A1), "Error in trigger", e.message);
+    throw e;
+  }
 }

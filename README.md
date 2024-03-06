@@ -3,10 +3,26 @@
 
 AppScript code for the HHI Map's Stakeholder Submission Form.
 
-Includes three triggers:
-- On stakeholder update, sends the stakeholder mail indicating the status (accept/reject)
-- On stakeholder accept, geocodes the locations to coordinates, and syncs the approved sheet with the realtime database
-- On stakeholder update but nonapproval, re-syncs the approved sheet with the realtime database
+![flow graph](./flow.png)
+
+# How Does This Work?
+
+### Submission Sheet and Handling Responses
+Submissions will fall under the "Submission" sheet. There, submissions can be approved or rejected based on the information present.
+ 
+On approval/rejection, an email can optionally be sent to the Email Address that submitted the form. This email is composed of the appropriate email configuration in the "Settings" sheet. 
+### Data Sheet and Recalculation, Synchronization
+On approval, a copy of submission information (excluding the Timestamp and Email Address) is pasted in the "Data" Sheet. 
+
+The "Data" Sheet represents the format of data copied to the database."
+
+Each submission has a few fields that must be calculated from prior entries. This notably includes geocoding. Pressing the "Recalculate" button in the "Settings" Sheet will automatically calculate any rows that have been updated since its last calculation (or perform one if there hasn't been one).
+
+The "Data" Sheet must also be synchronized to the database itself. Pressing the "Sync" button in the "Settings" Sheet will attempt recalculation if necessary, then synchronize all rows to the database.
+### Error Handling
+If there exists an error in processing, one of the cells for the values will be highlighted, and a note will appear on the cell explaining the reason. A notification will be sent to the email denoted as the administrator in the "Settings" Sheet.
+
+### Links
 
 Parent project: https://github.com/DSSD-Madison/HHI
 
@@ -24,7 +40,7 @@ This project requires node, npm, and clasp.
 
 To install clasp, run:
 ```
-npm install -g @google/clasp
+npm install -d @google/clasp
 ```
 
 To set up the project to sync, run the following at the root of this project:
@@ -32,10 +48,18 @@ To set up the project to sync, run the following at the root of this project:
 npm i
 npm run build
 clasp login
-clasp pull
 clasp push --watch
 ```
 
-Afterwards, go to Google App Script. Run the `createTriggers` function in the code to create all necessary triggers for the project.
+### Configuration
 
-If new permissions were added as part of OAuth, run the "sendEmail" function in any mode. A window should pop up asking for the permissions. (The function should fail, as undefined inputs as provided. This is just a workaround to make the app ask for permissions)
+Spreadsheet specific constants are located in the following:
+- `.clasp.json` -> The App Script id. From the sheet, navigate to Extensions > App Script. On the left hand side, select Project Settings. The Script ID should be a unique identifier
+- `constants.ts` -> Contains the constants `SPREADSHEET_ID`, `SUBMISSION_SHEET_ID`, `DATA_SHEET_ID`, `SETTING_SHEET_ID` to configure for a spreadsheet
+
+See `index.ts` for all of the latest triggers.
+
+There currently exists three triggers:
+- `onEditCustom` -> From the sheet, navigate to Extensions > Apps Script. On the top bar, select the `resetTriggers` function and run it. This will create the onEditCustom trigger and delete any existing triggers.
+- `onRecalculateButtonClick` -> Create a Google Drawing for a recalculate button to trigger this 
+- `onSyncButtonClick` -> Create a Google Drawing for a sync button to trigger this 

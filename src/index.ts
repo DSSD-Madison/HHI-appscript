@@ -1,85 +1,49 @@
-import { ADMIN_EMAIL, SPREADSHEET_ID } from "./constants";
-import { mailToRow, sendEmail } from "./services/email";
-import { geocodeRow } from "./services/geocode";
-import { deleteTriggers, isStakeholderApproved, isStakeholderRejected, isStakeholderStatusUpdate } from "./helper";
-import { syncApprovedSheet } from "./services/rtdb";
+import { DEBUG, SPREADSHEET_ID, SUBMISSION_SHEET_ID } from "./constants";
+import { wrapper } from "./services/error";
+import { onRecalculate, onSync } from "./sheets/data";
+import { onSubmissionSheetEdit } from "./sheets/submission";
 
-function createTriggers() {
+// Resets and creates desired triggers
+function resetTriggers() {
   deleteTriggers()
  
   const spreadsheet = SpreadsheetApp.openById(SPREADSHEET_ID)
 
-  const editTriggers = [
-    onStakeholderUpdateEmail.name,
-    onStakeholderApprovalGeocodeAndSync.name,
-    onStakeholderNonApprovalSync.name
-  ]
-
-  editTriggers.forEach(trigger => {
-    ScriptApp.newTrigger(trigger)
-      .forSpreadsheet(spreadsheet)
-      .onEdit()
-      .create()
-  })
+  ScriptApp.newTrigger(onEditCustom.name)
+    .forSpreadsheet(spreadsheet)
+    .onEdit()
+    .create();
 }
 
-// A wrapper for triggers to catch errors, log them, and notify an administrative email about issues
-function triggerWrapper(triggerCallback: () => void) {
-  try {
-    triggerCallback()
-  } catch (e) {
-    console.error(e)
-    sendEmail("Error in trigger", e.message, ADMIN_EMAIL)
+// Delete all the existing triggers for the project
+function deleteTriggers() {
+  if (DEBUG) { Logger.log("Deleting all triggers...") }
+  let triggers = ScriptApp.getProjectTriggers()
+  for (var i = 0; i < triggers.length; i++) {
+    ScriptApp.deleteTrigger(triggers[i])
   }
 }
 
-// Upon approval or rejection,
-// Sends an email to the stakeholder informing them, providing a reason if it is a rejection
-function onStakeholderUpdateEmail(e: GoogleAppsScript.Events.SheetsOnEdit) {
-  triggerWrapper(() => {
-    if (!isStakeholderStatusUpdate(e))
-      return
-
-    const sheet = e.source.getActiveSheet()
-    const row = e.range.getRow()
-
-    let approved = false
-
-    if (isStakeholderApproved(e)) approved = true
-    else if (isStakeholderRejected(e)) approved = false
-    else return // If neither rejected/approved, set to a default false
-
-    mailToRow(sheet, row, approved)
-  })
+function onEditCustom(e: GoogleAppsScript.Events.SheetsOnEdit) {
+  wrapper(() => {
+    if (e.source.getActiveSheet().getSheetId() === SUBMISSION_SHEET_ID) {
+      onSubmissionSheetEdit(e)
+    }
+  });
 }
 
-// Upon approval,
-// Geocodes the headquarters cell and list of communities served cell to coordinates
-// Also sends the updated approved stakeholders sheet to the RTDB
-function onStakeholderApprovalGeocodeAndSync(e: GoogleAppsScript.Events.SheetsOnEdit) {
-  triggerWrapper(() => {
-    if (!isStakeholderApproved(e))
-      return
-    
-    const sheet = e.source.getActiveSheet()
-    const row = e.range.getRow()
-    
-    geocodeRow(sheet, row)
-
-    // persist changes
-    SpreadsheetApp.flush()
-
-    syncApprovedSheet()
-  })
+// Should be linked to a button on the spreadsheet to sync data manually
+function onSyncButtonClick() {
+  wrapper(() => {
+    if (DEBUG) Logger.log("Sync button clicked.");
+    onSync()
+  });
 }
 
-// Upon nonapproval,
-// Updates the RTDB to remove the column in the approved sheet
-function onStakeholderNonApprovalSync(e: GoogleAppsScript.Events.SheetsOnEdit) {
-  triggerWrapper(() => {
-    if (!isStakeholderStatusUpdate(e) || isStakeholderApproved(e))
-      return
-
-    syncApprovedSheet()
-  })
+// Should be linked to a button on the spreadsheet to recalculate data manually
+function onRecalculateButtonClick() {
+  wrapper(() => {
+    if (DEBUG) Logger.log("Recalculate button clicked.");
+    onRecalculate()
+  });
 }
