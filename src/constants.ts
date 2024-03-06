@@ -1,9 +1,9 @@
 export const DEBUG = true
 
-export const SPREADSHEET_ID = "1TI0WNrGsTKC_lZPXhcwxK4fHsc2-A88GysVtidI75z0"
+export const SPREADSHEET_ID = "1112geWi_64-1Eev9PLxqnUHLi3GzXamSOxBqwyqyriM"
 
 /* Submission Sheet */
-export const SUBMISSION_SHEET_ID = 664466786
+export const SUBMISSION_SHEET_ID = 531528491
 
 export const EMAIL_COLUMN_NUMBER = columnToNumber('B')
 export const STATUS_COLUMN_NUMBER = columnToNumber('K')
@@ -47,7 +47,7 @@ export const REJECTED_WITH_REASON_MESSAGE_A1 = "B9" // contains {reason} to fill
 export const REJECTED_WITH_REASON_REPLACE = "{reason}"
 
 /* Database */
-export const REALTIME_DATABASE_URL = "https://hhimap-default-rtdb.firebaseio.com/"
+export const REALTIME_DATABASE_URL = "https://hhi-stakeholder-map-default-rtdb.firebaseio.com/"
 
 
 // Converts column string (A, B, C, ...) to column number (1, 2, 3, ...)

@@ -26,10 +26,7 @@ If there exists an error in processing, one of the cells for the values will be 
 
 Parent project: https://github.com/DSSD-Madison/HHI
 
-Spreadsheet: https://docs.google.com/spreadsheets/u/2/d/1TI0WNrGsTKC_lZPXhcwxK4fHsc2-A88GysVtidI75z0/edit#gid=0
-
-Submission Form: https://docs.google.com/forms/u/3/d/e/1FAIpQLSedeAfs9-vNfGNfuyFMi68RGyM3GqYfY2AhyvC8XMNDqiz9gw/viewform
-
+Spreadsheet: https://docs.google.com/spreadsheets/d/1112geWi_64-1Eev9PLxqnUHLi3GzXamSOxBqwyqyriM/edit?pli=1#gid=1202430194
 
 ### Local Development
 This project follows [this guide on AppScript](https://developers.google.com/apps-script/guides/typescript) to enable TypeScript development on AppScript.
